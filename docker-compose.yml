@@ -1,0 +1,24 @@
+# Use root/example as user/password credential
+version: '3.1'
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=example
+      - MARIADB_DATABASE=myexample
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=user
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/sql:/docker-entrypoint-initdb.d
+  adminer:
+    image: adminer  
+    restart: always
+    ports:
+      - 8080:8080
+  # springapp:
+  #   build: "./spring-boot-docker"
+    
