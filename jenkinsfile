@@ -1,0 +1,16 @@
+stages {
+  stage('githubからソースコードのクローン') {
+    steps {
+      git 'https://github.com/kotaroyatabe0235/spring-boot-jenkins.git'
+    } 
+    stage ('jarファイルの作成') {
+      sh 'cd app'
+      sh './mvnw clean package'
+    }
+    stage ('コンテナイメージのビルド') {
+      script {
+        dockerImage = docker.build.registry + ":$BUILD_NUMBER"
+      }
+    }
+  }
+}
